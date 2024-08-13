@@ -1,0 +1,53 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/constants/*": ["src/constants/*"],
+      "@/store/*": ["src/store/*"],
+      "@/components/*": ["src/components/*"],
+      "@/routes/*": ["src/routes/*"],
+      "@/*": ["src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/app/edit/page.jsx",
+    "src/components/EditVideo/CaptionControls.jsx",
+    "src/components/EditVideo/CaptionControlView.jsx",
+    "src/components/EditVideo/VideoPreview.jsx",
+    "src/components/EditVideo/CaptionColors.jsx",
+    "src/components/EditVideo/CaptionTemplates.jsx",
+    "src/components/EditVideo/EditTranscript.jsx",
+    "src/components/HomePageSteps/ProcessingModal.jsx",
+    "src/components/SubscribeModal/SubscribeModal.jsx",
+    "src/components/UploadVideoButton.jsx",
+    "src/hooks/useAuth.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
