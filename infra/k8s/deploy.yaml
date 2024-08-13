@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conversate-deploy
+  labels:
+    app: conversate
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: conversate
+  template:
+    metadata:
+      labels:
+        app: conversate
+    spec:
+      containers:
+      - name: conversate
+        image: sagnik3788/conversate:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conversate-service
+spec:
+  selector:
+    app: conversate
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
