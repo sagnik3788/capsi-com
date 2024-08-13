@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "given_name": {
+      "type": "string",
+      "pattern": "^[a-zA-Z ]*$",
+      "minLength": 1
+    },
+    "family_name": {
+      "type": "string",
+      "pattern": "^[a-zA-Z ]*$",
+      "minLength": 1
+    },
+    "email": {
+      "type": "email",
+      "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,63}$"
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "countryCode": {
+          "type": "string"
+        },
+        "contactNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "about": {
+      "type": "string",
+      "minLength": 1
+    },
+    "appProducerHandle": {
+      "type": "string",
+      "pattern": "^(?=[a-zA-Z0-9._])(?!.*[_.]{2})[^_.].*[^_.]$",
+      "minLength": 8,
+      "maxLength": 20
+    },
+    "gstin": {
+      "type": "string",
+      "pattern": "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}"
+    }
+  }
+}
