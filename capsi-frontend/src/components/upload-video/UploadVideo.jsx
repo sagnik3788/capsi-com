@@ -7,7 +7,7 @@ import VideoContainer from "../video/VideoContainer";
 import useAppStore from "../../store";
 
 const UploadVideo = () => {
-  const [percentage, setPercentage] = useState(0); // Initialize percentage state to 0
+  const [percentage, setPercentage] = useState(0);
   const [progress, setProgress] = useState(0);
   const [openProgress, setOpenProgress] = useState(true);
   const inputVideo = useAppStore(({ inputVideo }) => inputVideo);
@@ -16,10 +16,20 @@ const UploadVideo = () => {
   const setInputFile = useAppStore((state) => state.setInputFile);
   const [openPercentage, setOpenPercentage] = useState(false);
   const [video, setVideo] = useState("");
+  
+  // New state to hold transcript data
+  const [transcript, setTranscript] = useState([]);
 
+  // Fixing formData initialization
   const [formData, setFormData] = useState({
     language: "",
+    WordLimit: "true", // Set default value here
   });
+
+  const [srtUrl, setSrtUrl] = useState(""); // Add this state for SRT URL
+
+  const [selectedFont, setSelectedFont] = useState("della");
+  const [selectedColor, setSelectedColor] = useState("#000000");
 
   const handleClose = () => {
     setOpen(false);
@@ -44,32 +54,122 @@ const UploadVideo = () => {
     uploadVideo(selectedVideo);
   };
 
-  const uploadVideo = (selectedVideo) => {
+  const uploadVideo = async (selectedVideo) => {
+    console.log("uploadVideo function called");
+
     if (typeof window !== "undefined") {
       if (selectedVideo) {
+        console.log("Selected video:", selectedVideo.name, selectedVideo.type);
+
         if (
           selectedVideo.type === "video/mp4" ||
           selectedVideo.type === "video/quicktime"
         ) {
+          console.log("Valid video format detected");
           const videoObject = URL.createObjectURL(selectedVideo);
           const videoElement = document.createElement("video");
+          
+          console.log("Loading video metadata...");
           videoElement.src = videoObject;
-          videoElement.onloadedmetadata = () => {
+          
+          videoElement.onerror = (e) => {
+            console.error("Error loading video:", e);
+          };
+
+          videoElement.onloadedmetadata = async () => {
+            console.log("Video duration:", videoElement.duration);
+
             if (videoElement.duration <= 120) {
-              console.log(videoObject);
+              console.log("Video duration is within limits");
               setVideo(videoObject);
               sessionStorage.setItem("video", videoObject);
               setOpen(true);
               setOpenPercentage(true);
               setOpenProgress(true);
+
+              const apiFormData = new FormData();
+              apiFormData.append("video", selectedVideo);
+              apiFormData.append("SelectedLang", formData.language);
+              apiFormData.append("WordLimit", formData.WordLimit);
+
+              console.log("FormData prepared:", {
+                language: formData.language,
+                wordLimit: formData.WordLimit
+              });
+
+              try {
+                console.log("Starting API call to process-video");
+                const response = await fetch("https://wis-ai-backend-1.onrender.com/api/process-video", {
+                  method: "POST",
+                  body: apiFormData,
+                });
+
+                console.log("API response received:", response.status);
+
+                if (!response.ok) {
+                  throw new Error(`Failed to process video: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log("API Response data:", data);
+
+                // Store video and transcription data
+                setInputVideo({
+                  url: data.inputFile,
+                  transcription: data.rawData,
+                });
+
+                // Handle SRT file
+                if (data.srt) {
+                  console.log("SRT URL received:", data.srt);
+                  setSrtUrl(data.srt);
+                  sessionStorage.setItem("srtUrl", data.srt);
+                  
+                  // Download SRT file
+                  try {
+                    console.log("Starting SRT download");
+                    const srtResponse = await fetch(data.srt);
+                    const srtText = await srtResponse.text();
+                    console.log("SRT content received, creating download");
+                    
+                    const blob = new Blob([srtText], { type: 'text/plain' });
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `subtitle_${Date.now()}.srt`);
+                    document.body.appendChild(link);
+                    link.click();
+                    link.parentNode.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    console.log("SRT download completed");
+                  } catch (error) {
+                    console.error("Error downloading SRT:", error);
+                  }
+                } else {
+                  console.warn("No SRT URL in response");
+                }
+
+                // Save to session storage
+                sessionStorage.setItem("videoUrl", data.inputFile);
+
+              } catch (error) {
+                console.error("Upload error:", error);
+                alert("Error uploading video. Please try again.");
+              }
             } else {
+              console.warn("Video too long:", videoElement.duration);
               alert("Video length should be 2 minutes or less.");
             }
           };
         } else {
+          console.warn("Invalid video format:", selectedVideo.type);
           alert("Please select a video in MP4 or MOV format.");
         }
+      } else {
+        console.warn("No video selected");
       }
+    } else {
+      console.warn("Window is undefined");
     }
   };
 
@@ -111,17 +211,31 @@ const UploadVideo = () => {
     return () => clearInterval(interval);
   }, [progress]);
 
+  // Assuming you have a function to handle language selection
+  const handleLanguageChange = (selectedLanguage) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      language: selectedLanguage,
+    }));
+    console.log("Language selected:", selectedLanguage);
+  };
+
   return (
     <>
       {video ? (
-        <VideoContainer
-          progress={progress}
-          video={video}
-          openProgress={openProgress}
-          openPercentage={openPercentage}
-          percentage={percentage}
-          formData={formData}
-        />
+        <div className="relative">
+          <VideoContainer
+            progress={progress}
+            video={video}
+            srtUrl={srtUrl}
+            openProgress={openProgress}
+            openPercentage={openPercentage}
+            percentage={percentage}
+            formData={formData}
+            selectedFont={selectedFont}
+            selectedColor={selectedColor}
+          />
+        </div>
       ) : (
         <div
           className={`${
@@ -172,16 +286,12 @@ const UploadVideo = () => {
           </div>
         </div>
       )}
-      {/* <VideoPercentagePopup
-        openPercentage={openPercentage}
-        handleClosePercentage={handleClosePercentage}
-        percentage={percentage}
-      /> */}
       <LanguagePopup
         formData={formData}
         setFormData={setFormData}
         open={open}
         handleClose={handleClose}
+        onLanguageChange={handleLanguageChange} // Pass the handler to the component
       />
     </>
   );

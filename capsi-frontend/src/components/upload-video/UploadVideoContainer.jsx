@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState, useEffect } from "react";
 import UploadVideo from "./UploadVideo";
@@ -26,7 +27,9 @@ const UploadVideoContainer = () => {
         )}
       </div>
       <div className="flex justify-center items-center w-full">
-        <UploadVideo />
+        <div className="w-full max-w-md mx-auto">
+          <UploadVideo />
+        </div>
       </div>
       <div className="h-full flex items-end justify-center gap-3 font-medium text-stone-600 pt-10 sm:pt-14 ">
         <Link href="/terms-and-conditions">Terms & Conditions</Link>

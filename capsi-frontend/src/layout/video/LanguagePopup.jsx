@@ -77,6 +77,9 @@ const LanguagePopup = ({ formData, setFormData, open, handleClose }) => {
 export default LanguagePopup;
 
 export const language = [
-  { value: "Hindi", label: "🇮🇳 Hindi" },
-  { value: "English", label: "🇺🇸 English" },
+  { value: "Hindi", label: "Hindi" },
+  { value: "English", label: "English" },
+  { value: "Bengali", label: "Bengali" },
+  { value: "Telugu", label: "Telugu" },
+  { value: "Marathi", label: "Marathi" },
 ];
