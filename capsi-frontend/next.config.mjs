@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const serverConfigs = {
-  apiUrl: `http://localhost:3001`,
+  apiUrl: `https://wis-ai-backend-1.onrender.com/`,
 };
 const nextConfig = {
   distDir: process.env.BUILD_DIR || ".next",
