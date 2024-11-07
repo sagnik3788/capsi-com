@@ -545,7 +545,7 @@ export default function Content() {
           <p>
             Under GDPR, capsi-com is a data processor. If you need to have capsi-com
             sign a DPA with your company, please contact us at{" "}
-            <Link href="mailto:chetankudnekar50@gmail.com">support@capsi-com</Link>{" "}
+            <Link href="sagnikdas5432@gmail.com">support@capsi-com</Link>{" "}
             . Data Processing Agreement (DPA) outlines how it processes personal
             data on behalf of its customers. This DPA is available to customers
             upon request.
