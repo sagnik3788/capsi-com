@@ -7,14 +7,14 @@ export default function Content() {
       <Header title={"Terms of use"} />
       <br />
       <div className="flex flex-col gap-5 text-secondary leading-[1.25rem] md:leading-normal">
-        <p>Last updated: 10th Sept, 2023</p>
+        <p>Last updated: 8th Nov, 2024</p>
 
-        <p>Welcome to CapsAi</p>
+        <p>Welcome to Capsi-com</p>
 
         <p>
           These terms of service (these “Terms”) govern the use of our network
           and other products and services (collectively, the “Service”) provided
-          via capsai.co (the “Site” or “Sites”).
+          via capsi-com.co (the “Site” or “Sites”).
         </p>
 
         <p>
@@ -55,11 +55,11 @@ export default function Content() {
           <p>Service</p>
           <ul className="ml-6 list-disc leading-[1.25rem]">
             <li>
-              CapsAi operates an online platform designed to enhance video
+              capsi-com operates an online platform designed to enhance video
               content with dynamic captions.
             </li>
             <li>Upload videos to automatically generate transcripts.</li>
-            <li>CapsAi Customize captions using a variety of set templates.</li>
+            <li>Capsicom Customize captions using a variety of set templates.</li>
             <li>
               Edit subtitle text, color, and timestamp for a personalized touch.
             </li>
@@ -88,7 +88,7 @@ export default function Content() {
             </li>
             <li>
               You are solely responsible for safeguarding your passwords and any
-              activities or transactions related to your CapsAi account or
+              activities or transactions related to your capsi-com account or
               password.
             </li>
           </ul>
@@ -98,19 +98,19 @@ export default function Content() {
           <p>Rights</p>
           <ul className="ml-6 list-disc leading-[1.25rem]">
             <li>
-              CapsAi is solely responsible for the operation and upkeep of the
-              capsai.co platform.
+              Capsi-com is solely responsible for the operation and upkeep of the
+              capsi-com platform.
             </li>
             <li>
               Individuals/Organizations retain ownership and responsibility for
               support and claims related to their video content.
             </li>
             <li>
-              CapsAi reserves the right to review, screen, or monitor video
+              capsi-com reserves the right to review, screen, or monitor video
               content at any time and for any reason without prior notice.
             </li>
             <li>
-              CapsAi may remove any video content that violates terms or
+              capsi-com may remove any video content that violates terms or
               guidelines.
             </li>
           </ul>
@@ -127,13 +127,13 @@ export default function Content() {
             <li>
               Modifying, disclosing, altering, translating, or creating
               derivative works of the Service or any components thereof without
-              the express permission of CapsAi.
+              the express permission of capsi-com.
             </li>
             <li>
               Licensing, sublicensing, reselling, distributing, leasing,
               renting, lending, transferring, assigning, or otherwise disposing
               of the Service or any components thereof without the express
-              permission of CapsAi.
+              permission of capsi-com.
             </li>
             <li>
               Disassembling, decompiling, or reverse engineering the software
@@ -178,7 +178,7 @@ export default function Content() {
             </li>
             <li>
               By using the Service, you agree to comply with all applicable laws
-              and regulations. CapsAi reserves the right to terminate or
+              and regulations. capsi-com reserves the right to terminate or
               restrict your access to the Service if you engage in any
               prohibited or illegal activity.
             </li>
@@ -189,7 +189,7 @@ export default function Content() {
           <p>Suspension or Termination</p>
           <ul className="ml-6 list-disc leading-[1.25rem]">
             <li>
-              CapsAi may suspend or terminate a user‘s access to the service at
+              capsi-com may suspend or terminate a user‘s access to the service at
               any time and for any reason without notice.
             </li>
             <li>
@@ -197,7 +197,7 @@ export default function Content() {
               accessing or using the Service immediately.
             </li>
             <li>
-              CapsAi may take legal action against a user for continuing to use
+              capsi-com may take legal action against a user for continuing to use
               the service during suspension or after termination.
             </li>
             <li>
@@ -212,7 +212,7 @@ export default function Content() {
           <p>Disclaimer</p>
           <p>
             YOUR USE OF THE SERVICE IS AT YOUR SOLE RISK. THE SERVICE IS
-            PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS. CapsAi DISCLAIMS
+            PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS. capsi-com DISCLAIMS
             ALL WARRANTIES AND REPRESENTATIONS (EXPRESS OR IMPLIED, ORAL OR
             WRITTEN) WITH RESPECT TO THESE TERMS, THE SERVICE, ANY OF THE APPS
             PROVIDED VIA THE SERVICE, ANY API CONTENT/TERMS, ANY USER CONTENT,
@@ -244,7 +244,7 @@ export default function Content() {
           <p>Indemnification</p>
           <p>
             You agree, at your sole expense, to defend, indemnify and hold
-            CapsAi (and its directors, officers, employees, consultants and
+            capsi-com (and its directors, officers, employees, consultants and
             agents) harmless from and against any and all actual or threatened
             suits, actions, proceedings (at law or in equity), claims, damages,
             payments, deficiencies, fines, judgments, settlements, liabilities,
@@ -262,7 +262,7 @@ export default function Content() {
         <div>
           <p>Limitation of liability</p>
           <p>
-            TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, CapsAiWILL NOT BE
+            TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, capsi-comWILL NOT BE
             LIABLE TO YOU OR ANY THIRD PARTY FOR ANY INCIDENTAL, SPECIAL,
             INDIRECT, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES WHATSOEVER,
             ARISING OUT OF OR RELATED TO THESE TERMS, THE SERVICE, ANY OF THE
@@ -292,7 +292,7 @@ export default function Content() {
         </p>
 
         <p>
-          CapsAi reserves the right, but does not have the obligation, to
+          capsi-com reserves the right, but does not have the obligation, to
           review, screen, or monitor any links to any Apps or any App
           Content/Terms (as defined below) at any time and for any reason
           without notice.
@@ -302,25 +302,25 @@ export default function Content() {
           <p>Arbitration</p>
           <p>
             PLEASE READ THE FOLLOWING PARAGRAPHS CAREFULLY BECAUSE THEY REQUIRE
-            YOU TO ARBITRATE DISPUTES WITH CapsAi AND LIMIT THE MANNER IN WHICH
-            YOU CAN SEEK RELIEF FROM CapsAi.
+            YOU TO ARBITRATE DISPUTES WITH capsi-com AND LIMIT THE MANNER IN WHICH
+            YOU CAN SEEK RELIEF FROM capsi-com.
           </p>
         </div>
 
         <p>
           In the event of any controversy or claim arising out of or relating in
-          any way to these Terms or the Service, you and CapsAi agree to consult
+          any way to these Terms or the Service, you and capsi-com agree to consult
           and negotiate with each other and, recognizing your mutual interests,
           try to reach a solution satisfactory to both parties. If we do not
           reach settlement within a period of 60 days, then either of us may, by
           notice to the other, demand mediation under the mediation rules of the
           Indian Council of Arbitration (ICA) based in New Delhi, India. We both
           give up our right to litigate our disputes and may not proceed to
-          arbitration without first trying mediation, but you and CapsAi are NOT
+          arbitration without first trying mediation, but you and capsi-com are NOT
           required to arbitrate any dispute in which either party seeks
           equitable and other relief from the alleged unlawful use of
           copyrights, trademarks, trade names, logos, trade secrets or patents.
-          Except as otherwise required under applicable law, you and CapsAi
+          Except as otherwise required under applicable law, you and capsi-com
           intend and agree: (a) not to assert class action or representative
           action procedures and agree that they will not apply in any
           arbitration involving the other; (b) not to assert class action or
@@ -361,11 +361,11 @@ export default function Content() {
           <ul className="ml-6 list-disc leading-[1.25rem]">
             <li>
               Any suggestions, comments, or other feedback provided by you to
-              CapsAi with respect to the Service or CapsAi will be considered
+              capsi-com with respect to the Service or capsi-com will be considered
               non-confidential and non-proprietary.
             </li>
             <li>
-              By providing Feedback to CapsAi, you grant CapsAi a non-exclusive,
+              By providing Feedback to capsi-com, you grant capsi-com a non-exclusive,
               worldwide, royalty-free, irrevocable, sub-licensable, and
               transferable license to use, copy, distribute, and disclose the
               Feedback in any manner and for any purpose.
@@ -379,25 +379,25 @@ export default function Content() {
             <li>
               You are granted a limited, non-exclusive right to create a text
               hyperlink to the Service for noncommercial purposes, provided such
-              link does not portray CapsAi or any of its products and services
+              link does not portray capsi-com or any of its products and services
               in a false, misleading, derogatory, or defamatory manner and that
               the linking site does not contain any material that is offensive,
               illegal, harassing, or otherwise objectionable.
             </li>
             <li>This limited right may be revoked at any time.</li>
             <li>
-              CapsAi makes no claim or representation regarding, and accepts no
+              capsi-com makes no claim or representation regarding, and accepts no
               responsibility for, the quality, content, nature, or reliability
               of third-party sites accessible by link from the Service or Site.
             </li>
             <li>
-              CapsAi provides these links to you only as a convenience, and the
+              capsi-com provides these links to you only as a convenience, and the
               inclusion of any link does not imply affiliation, endorsement, or
-              adoption by CapsAi of the corresponding site or any information
+              adoption by capsi-com of the corresponding site or any information
               contained in (or made available via) that site.
             </li>
             <li>
-              When you leave the Site, CapsAi’s terms and policies no longer
+              When you leave the Site, capsi-com’s terms and policies no longer
               govern.
             </li>
             <li>
@@ -412,7 +412,7 @@ export default function Content() {
           <p>Third-Party Advertising</p>
           <ul className="ml-6 list-disc leading-[1.25rem]">
             <li>
-              CapsAi may run advertisements and promotions from third parties
+              capsi-com may run advertisements and promotions from third parties
               through or in connection with the Service or may provide
               information about or links to third-party products or services.
             </li>
@@ -425,7 +425,7 @@ export default function Content() {
               applicable third party.
             </li>
             <li>
-              CapsAi is not responsible or liable for any loss or damage of any
+              capsi-com is not responsible or liable for any loss or damage of any
               sort incurred as the result of any such dealings, correspondence,
               or promotions or as the result of the presence of such advertisers
               or third-party information made available through the Service.
@@ -457,14 +457,14 @@ export default function Content() {
           <ul className="ml-6 list-disc leading-[1.25rem]">
             <li>
               You may not assign, delegate, or transfer these Terms or any
-              rights without the prior written consent of CapsAi.
+              rights without the prior written consent of capsi-com.
             </li>
             <li>
               Any attempted or purported assignment, delegation, or transfer
               without consent will be null and void.
             </li>
             <li>
-              CapsAi may assign these Terms without your prior written consent
+              capsi-com may assign these Terms without your prior written consent
               and the terms will be binding and inure to the benefit of the
               assignees, transferees, and other successors.
             </li>
@@ -475,7 +475,7 @@ export default function Content() {
           <p>Third-Party Infrastructure</p>
           <ul className="ml-6 list-disc leading-[1.25rem]">
             <li>
-              CapsAi uses a third-party hosting infrastructure in connection
+              capsi-com uses a third-party hosting infrastructure in connection
               with the Services.
             </li>
             <li>
@@ -484,7 +484,7 @@ export default function Content() {
               Infrastructure.
             </li>
             <li>
-              CapsAi assumes no liability for any claim that may arise with
+              capsi-com assumes no liability for any claim that may arise with
               respect to such Third-Party Infrastructure.
             </li>
           </ul>
@@ -503,7 +503,7 @@ export default function Content() {
             </li>
             <li>
               You may withdraw your consent to receive electronic notices by
-              contacting support@https://capsai.co/
+              contacting support@https://capsi-com.co/
             </li>
           </ul>
         </div>
@@ -528,11 +528,11 @@ export default function Content() {
           <p>Force Majeure</p>
           <ul className="ml-6 list-disc leading-[1.25rem]">
             <li>
-              CapsAi is not responsible for any failure to perform or delay
+              capsi-com is not responsible for any failure to perform or delay
               caused by any event beyond its reasonable control, including acts
               of God, acts of terrorism, civil disturbances, disruption of power
               or other essential services, interruption or termination of
-              services provided by any service providers used by CapsAi, labor
+              services provided by any service providers used by capsi-com, labor
               disturbances, vandalism, cable cut, computer viruses or other
               similar occurrences, or any malicious or unlawful acts of any
               third party.
@@ -543,9 +543,9 @@ export default function Content() {
         <div>
           <p>GDPR</p>
           <p>
-            Under GDPR, CapsAi is a data processor. If you need to have CapsAi
+            Under GDPR, capsi-com is a data processor. If you need to have capsi-com
             sign a DPA with your company, please contact us at{" "}
-            <Link href="mailto:chetankudnekar50@gmail.com">support@CapsAi</Link>{" "}
+            <Link href="mailto:chetankudnekar50@gmail.com">support@capsi-com</Link>{" "}
             . Data Processing Agreement (DPA) outlines how it processes personal
             data on behalf of its customers. This DPA is available to customers
             upon request.

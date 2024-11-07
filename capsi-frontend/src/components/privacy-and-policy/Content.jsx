@@ -10,7 +10,7 @@ export default function Content() {
           Your privacy is important to us. It is our policy to respect your
           privacy and comply with any applicable law and regulation regarding
           any personal information we may collect about you, including across
-          our website, https://capsai.co/, and other sites we own and operate.
+          our website and other sites we own and operate.
         </p>
 
         <div>
@@ -303,7 +303,7 @@ export default function Content() {
             contact us using the following details:
           </p>
           <p>Support Team</p>
-          <a href="mailto:support@capsai.co">support@capsai.co</a>
+          <a href="mailto:support@capsi-com.co">support@capsi-com.co</a>
         </div>
         {/*  */}
       </div>
