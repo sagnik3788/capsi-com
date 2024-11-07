@@ -12,15 +12,20 @@ const FONT_OPTIONS = [
 
 
 const COLOR_OPTIONS = [
-  { name: 'Black', value: '#000000' },
+  { name: 'Amber', value: '#FF9800' },
   { name: 'Red', value: '#FF0000' },
   { name: 'Green', value: '#00FF00' },
   { name: 'Blue', value: '#0000FF' },
   { name: 'Yellow', value: '#FFFF00' },
   { name: 'Magenta', value: '#FF00FF' },
   { name: 'Cyan', value: '#00FFFF' },
-  { name: 'white', value: '#FFFFFF' }
+  { name: 'White', value: '#FFFFFF' },
+  { name: 'Purple', value: '#683AB7' },
+  { name: 'Light Blue', value: '#2094F3' },
+  { name: 'Orange', value: '#FF5722' },
+  { name: 'Cyan Dark', value: '#00BCD4' },
 ];
+
 
 const styles = {
   container: {

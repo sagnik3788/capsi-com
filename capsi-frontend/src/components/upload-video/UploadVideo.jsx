@@ -99,7 +99,7 @@ const UploadVideo = () => {
 
               try {
                 console.log("Starting API call to process-video");
-                const response = await fetch("https://wis-ai-backend-1.onrender.com/api/process-video", {
+                const response = await fetch("http://54.90.90.71/api/process-video", {
                   method: "POST",
                   body: apiFormData,
                 });
