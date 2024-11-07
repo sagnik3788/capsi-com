@@ -12,7 +12,6 @@ const {
 } = require("../models/video");
 const {
   objectsToSrt,
-  srtToObjects,
   transcriptionItemsToArr,
 } = require("../util/srtObjectConverter");
 const { hexToAssBGR } = require("../util/assHexStyleConverter");
@@ -23,246 +22,129 @@ const API_KEY = process.env.API_KEY;
 const client = new AssemblyAI({ apiKey: API_KEY });
 
 const templateThemes = {
-  1: {
-    Theme:
-      "Style: Default,Roboto,18,&H0000ffff,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1,1.5,2,10,10,60,0",
-  },
-  2: {
-    Theme:
-      "Style: Default,Roboto,18,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,2,10,10,60,0",
-  },
-  3: {
-    Theme:
-      "Style: Default,Komika Title - Paint,20,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,10,10,60,0",
-  },
-  4: {
-    Theme:
-      "Style: Default,Roboto,18,&H00000000,&H00000000,&H0001DBFF,&H00A805A7,0,0,0,0,100,100,0,0,3,4,0,2,10,10,60,128",
-  },
-  5: {
-    Theme:
-      "Style: Default,The Bold Font,25,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,28,28,67,0",
-  },
-  6: {
-    Theme:
-      "Style: Default,Opinion Pro,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0.5,5.5,2,28,28,400,0",
-  },
+  1: "Style: Default,Roboto,18,&H0000ffff,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1,1.5,2,10,10,60,0",
+  2: "Style: Default,Roboto,18,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,2,10,10,60,0",
+  3: "Style: Default,Komika Title - Paint,20,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,10,10,60,0",
+  4: "Style: Default,Roboto,18,&H00000000,&H00000000,&H0001DBFF,&H00A805A7,0,0,0,0,100,100,0,0,3,4,0,2,10,10,60,128",
+  5: "Style: Default,The Bold Font,25,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,28,28,67,0",
+  6: "Style: Default,Opinion Pro,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0.5,5.5,2,28,28,400,0",
+};
+
+// Helper function to execute shell commands and handle errors
+const execCommand = (command) => new Promise((resolve, reject) => {
+  exec(command, (error, stdout, stderr) => {
+    if (error) reject({ error, stderr });
+    else resolve(stdout);
+  });
+});
+
+// Helper function to send error response
+const handleError = (res, status, title, body) => {
+  res.status(status).json({
+    error: "Internal Server Error",
+    message: { title, body },
+  });
 };
 
 async function getSampleVideo(req, res) {
-  const { userId, email } = req.context;
-  console.log("userId:", userId);
-  const dirPath = path.join(__dirname, "../");
-  console.log("function invoked");
-
-  const templateNo = req.query.templateNo;
-  let sampleNumber = req.query.sampleNo;
+  const { templateNo, sampleNo } = req.query;
   try {
-    setTimeout(() => {
-      console.log("sampleNumber:", sampleNumber);
-      console.log("TemplateNo:", templateNo);
-      let SampleUrl = sampleVideoLinks[sampleNumber][templateNo];
-      console.log("SampleUrl:", SampleUrl);
-      res.json({
-        data: {
-          url: SampleUrl,
-        },
-      });
-      return;
-    }, 1000);
+    const sampleUrl = sampleVideoLinks[sampleNo]?.[templateNo];
+    if (!sampleUrl) throw new Error("Invalid template or sample number");
+
+    res.json({ data: { url: sampleUrl } });
   } catch (e) {
-    console.log(e);
-    res.status(400).json({
-      error: "Something went wrong!",
-      message: { title: "Invalid template number or sample number" },
-    });
+    console.error(e);
+    handleError(res, 400, "Invalid template number or sample number", e.message);
   }
 }
 
 async function createSRTSubtitles(req, res) {
   const { userId } = req.context;
-  const dirPath = path.join(__dirname, "../" + "srt/");
+  const dirPath = path.join(__dirname, "../srt/");
+  const uniquePrefix = `${uuidv4()}_`;
+
   try {
-    const templateNo = req.query.templateNo;
-    const transcriptArray = req.body.transcript;
-    const hexCode = req.query.hexCode;
+    const { templateNo, hexCode } = req.query;
+    const { videourl: FILE_URL, transcript } = req.body;
 
-    const srtData = await objectsToSrt(transcriptArray);
-    console.log("Template Number: " + templateNo);
-    const FILE_URL = req.body.videourl;
-    const selectedTheme = templateThemes[templateNo];
-    if (!selectedTheme) {
-      console.error("Invalid template number:", templateNo);
-      res.status(400).json({
-        error: "Bad Request",
-        message: { title: "Invalid template number" },
-      });
-      return;
-    }
-    const transcriptData = { audio_url: FILE_URL };
-    console.log(transcriptData);
-    const uniquePrefix = `${uuidv4()}_`;
-    const videoData = {
-      videoId: uniquePrefix,
-      userId: userId,
-    };
-    await createVideo(videoData);
-    await updateVideoStatus(uniquePrefix, "AI is creating transcript");
+    const theme = templateThemes[templateNo];
+    if (!theme) return handleError(res, 400, "Invalid template number");
 
-    fs.writeFileSync(dirPath + uniquePrefix + "output.srt", srtData);
+    const srtData = await objectsToSrt(transcript);
+    const srtFilePath = path.join(dirPath, `${uniquePrefix}output.srt`);
+    const assFilePath = path.join(dirPath, `${uniquePrefix}output.ass`);
 
-    const srtFilePath = dirPath + uniquePrefix + "output.srt";
-    const assFilePath = dirPath + uniquePrefix + "output.ass";
+    // Save SRT file
+    fs.writeFileSync(srtFilePath, srtData);
 
-    // Conversion from SRT to ASS using FFmpeg
-    const assConversionCommand = `ffmpeg -i ${srtFilePath} -vf "subtitles=${srtFilePath}" ${assFilePath}`;
-    exec(assConversionCommand, async (error, stdout, stderr) => {
-      if (error) {
-        console.error("FFmpeg Conversion Error:", error);
-        console.error("FFmpeg stderr:", stderr);
-        res.status(500).json({
-          error: "Internal Server Error",
-          reason: "Conversion Error",
-          message: {
-            title: "Downlolad failed!",
-            body: "Error during FFmpeg conversion to ASS",
-          },
-        });
-        return;
-      }
+    // Convert SRT to ASS with FFmpeg
+    try {
+      await execCommand(`ffmpeg -i ${srtFilePath} -vf "subtitles=${srtFilePath}" ${assFilePath}`);
 
+      // Apply theme styling to ASS file
       let fileContent = fs.readFileSync(assFilePath, "utf-8");
-      const selectedTheme = templateThemes[templateNo];
-      let newStyleLine = selectedTheme.Theme;
+      let styledTheme = hexCode ? theme.replace(/&[^,]*/, hexToAssBGR(hexCode)) : theme;
+      fileContent = fileContent.replace(/^Style: Default,.+$/m, styledTheme);
+      fs.writeFileSync(assFilePath, fileContent);
 
-      if (hexCode) {
-        const primaryColor = hexToAssBGR(hexCode);
-        newStyleLine = newStyleLine.replace(/&[^,]*/, primaryColor);
-      }
-      if (hexCode) console.log("success");
+      // Overlay ASS on video with FFmpeg
+      const outputPath = path.join(dirPath, `${uniquePrefix}output.mp4`);
+      await execCommand(`ffmpeg -i ${FILE_URL} -vf "ass=${assFilePath}" ${outputPath}`);
 
-      fileContent = fileContent.replace(/^Style: Default,.+$/m, newStyleLine);
-      console.log(fileContent);
-      fs.writeFileSync(assFilePath, fileContent, "utf-8");
-
-      const command = `ffmpeg -i ${FILE_URL} -vf "ass=${assFilePath}" ${
-        dirPath + uniquePrefix
-      }output.mp4`;
-
-      exec(command, async (error, stdout, stderr) => {
-        if (error) {
-          console.error("FFmpeg Execution Error:", error);
-          console.error("FFmpeg stderr:", stderr);
-          res.status(500).json({
-            error: "Internal Server Error",
-            message: {
-              title: "Download failed!",
-              body: "Error during FFmpeg execution",
-            },
-          });
-          return;
-        }
-
-        const fileUrl = await uploadFile(
-          `${dirPath + uniquePrefix}output.mp4`,
-          uniquePrefix
-        );
-        console.log(fileUrl);
-        await updateVideoStatus(uniquePrefix, "Process Completed");
-        await getVideoStatus(uniquePrefix);
-        fs.unlinkSync(`${dirPath + uniquePrefix}output.srt`);
-
-        fs.unlinkSync(`${dirPath + uniquePrefix}output.mp4`);
-
-        res.json({
-          data: {
-            url: fileUrl,
-          },
-        });
-      });
-    });
+      // Upload and return the processed video
+      const fileUrl = await uploadFile(outputPath, uniquePrefix);
+      await updateVideoStatus(uniquePrefix, "Process Completed");
+      await getVideoStatus(uniquePrefix);
+      res.json({ data: { url: fileUrl } });
+      
+      // Clean up
+      fs.unlinkSync(srtFilePath);
+      fs.unlinkSync(outputPath);
+    } catch (error) {
+      console.error("FFmpeg Error:", error);
+      handleError(res, 500, "FFmpeg Conversion Failed", error.stderr);
+    }
   } catch (error) {
-    console.error("An error occurred:", error);
-    res.status(500).json({
-      error: "Internal Server Error",
-      message: {
-        title: "Error",
-        body: "An error occurred during subtitle creation",
-      },
-    });
+    console.error("Subtitle creation error:", error);
+    handleError(res, 500, "Subtitle creation failed", error.message);
   }
 }
 
 async function getCurrentVideoStatus(req, res) {
-  const video = await getLatestVideoStatus();
-
-  res.json({
-    data: video,
-  });
+  try {
+    const video = await getLatestVideoStatus();
+    res.json({ data: video });
+  } catch (error) {
+    console.error("Status retrieval error:", error);
+    handleError(res, 500, "Failed to retrieve video status");
+  }
 }
 
 async function getTranscription(req, res) {
-  console.log("getTranscription");
-  console.log("FILE_URL ", req?.file);
-  const language_code = req.query.languageCode;
-  // console.log(req.body?.languageCode);
+  const { languageCode } = req.query;
+  const FILE_URL = req?.file?.path || req.body.awsurl;
+  const uniquePrefix = `${uuidv4()}_`;
+
+  if (!FILE_URL) {
+    return handleError(res, 400, "No audio URL provided");
+  }
+
   try {
-    const uniquePrefix = `${uuidv4()}_`;
-    let fileUrl;
-    const FILE_URL = req?.file?.path;
-    console.log("FILE_URL ", FILE_URL);
-    if (FILE_URL) {
-      fileUrl = await uploadFile(`${FILE_URL}`, uniquePrefix);
-    } else {
-      fileUrl = req.body.awsurl;
-    }
+    const fileUrl = await uploadFile(FILE_URL, uniquePrefix);
+    const params = { audio: fileUrl, language_code: languageCode };
 
-    // const transcriptData = { audio_url: fileUrl };
-    const params = {
-      audio: fileUrl,
-      language_code,
-    };
-    let transcript;
-
-    try {
-      if (fileUrl) {
-        transcript = await client.transcripts.transcribe(params);
-
-        console.log(transcript);
-
-        // console.log(transcription);
-        // transcript = await client.transcripts.transcribe(params);
-        console.log("Transcript created");
-      }
-    } catch (error) {
-      console.log("transcriptionerror:", error);
-    }
-
-    if (!transcript || !transcript.id) {
-      console.error("Invalid transcript object:");
-      res.status(500).json({
-        error: "Internal Server Error",
-        message: {
-          title: "Invalid transcript object",
-          body: "Invalid transcript object",
-        },
-      });
-      return;
-    }
-
+    // Transcribe and check status
+    const { id } = await client.transcripts.transcribe(params);
     let status = "queued";
-    while (status !== "completed") {
-      const { status: newStatus } = await client.transcripts.get(transcript.id);
 
+    while (status !== "completed") {
+      const { status: newStatus } = await client.transcripts.get(id);
       status = newStatus;
-      if (status === "completed") {
-        console.log("Transcript is completed. ");
-      } else {
-        // console.log("Transcript is still processing...");
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-      }
+      if (status !== "completed") await new Promise(resolve => setTimeout(resolve, 5000));
     }
-    console.log("transcript ", transcript);
+
+    const transcript = await client.transcripts.get(id);
     res.json({
       data: {
         fileUrl: FILE_URL,
@@ -271,14 +153,8 @@ async function getTranscription(req, res) {
       },
     });
   } catch (error) {
-    console.error("An error occurred:", error);
-    res.status(500).json({
-      error: "Internal Server Error",
-      message: {
-        title: "Error",
-        body: "An error occurred during subtitle creation",
-      },
-    });
+    console.error("Transcription error:", error);
+    handleError(res, 500, "Transcription process failed");
   }
 }
 
