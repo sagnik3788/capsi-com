@@ -11,7 +11,7 @@ export default function Footer() {
       </button>
 
       <h1 className="hidden lg:block text-center text-3xl">
-        Save around hundreds of hours with CapsAI
+        Save around hundreds of hours with Capsi-com
       </h1>
 
       <h1 className="lg:hidden text-center text-2xl">
