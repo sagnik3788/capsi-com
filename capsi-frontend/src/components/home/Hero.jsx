@@ -32,7 +32,7 @@ export default function Hero() {
             Unleash the potential of your content and captivate your audience
             like never
           </p>{" "}
-          <p>before. CapsAI – where creativity meets enhancement, making</p>{" "}
+          <p>before. Capsi-com – where creativity meets enhancement, making</p>{" "}
           <p> your videos unforgettable.</p>
         </div>
       </div>
