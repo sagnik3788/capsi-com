@@ -1,19 +1,29 @@
 # Node.js dependencies
 node_modules/
 
+
+
 # Next.js build output
 .next/
 
+
+
 # Environment variables
 .env
+
+
 
 # Logs
 logs/
 *.log
 
+
+
 # OS-generated files
 .DS_Store
 Thumbs.db
+
+
 
 # Temporary files
 *.tmp
