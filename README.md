@@ -1,4 +1,4 @@
-# capsi-gen
+# capsi-com
 
 # Capsi-com: AI-Powered Subtitle Generator
 
