@@ -43,7 +43,7 @@ export default function Footer() {
         >
           Privacy Policy
         </Link>
-        <a href="mailto:support@capsai.co" className="hover:text-secondary duration-300">
+        <a href="mailto:sagnikdas5432@gmail.com" className="hover:text-secondary duration-300">
         Contact Us
       </a>
       </div>
